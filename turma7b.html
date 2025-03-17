@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gamificação de Pontos de Alunos</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Adicione o arquivo CSS para estilização -->
+    <script type="module" src="app2.js"></script> <!-- Adicione o arquivo JavaScript -->
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Love+Ya+Like+A+Sister&display=swap');
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Love+Ya+Like+A+Sister&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>GAMIFICAÇÃO DE PONTOS</h1>
+        <h1 id="nomeTurma">Alunos - 7b</h1>
+        <nav>
+            <ul id="estudantesDados">
+                <li class="navegacaoSuperior"><a href="index.html">Turma - 7a</a></li>
+                <li class="navegacaoSuperior"><a href="turma7c.html">Turma - 7c</a></li>
+                <li class="navegacaoSuperior"><a href="turma8a.html">Turma - 8a</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <form id="formAtualizarPontuacao">
+            <div class="container">
+                <img src="assets/boneca.png" class="boneca" alt="Boneca" id="boneca">
+                <select type="text" id="nomeAluno" required>
+                    <option value="">Selecione um aluno</option>
+                </select>
+                <img src="assets/turmalina.png" title="Aperte para pontuar" class="pedra" alt="Turmalina" id="turmalina">
+            </div>
+        </form>
+        <section id="student-info">
+                <div>
+                    <h2>RANKING</h2>
+                </div>
+            <table>
+                <thead>
+                    <tr id="linhaRanking">
+                        <th id="linhaNome" class="linhaRanking">Nome</th>
+                        <th id="linhaConquistas" class="linhaRanking">Conquistas</th>
+                    </tr>
+                </thead>
+                <tbody id="estudantesList">
+                    <!-- As linhas da tabela serão preenchidas pelo JavaScript -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; EMTI PROFESSOR GUTENBERG BARBOSA SILVA</p>
+        <p>Desenvolvido por <span title="E-mail: juniornyanata@gmail.com"><strong>José Evangelista da Silva Filho</strong></span></p>
+    </footer>
+</body>
+</html>
