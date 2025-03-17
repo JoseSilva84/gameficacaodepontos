@@ -277,3 +277,126 @@ main {
         transform: translateY(0);
     }
 }
+
+/* Telas pequenas (como smartphones) */
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+        background-size: contain; /* Ajuste a imagem de fundo para caber em telas pequenas */
+    }
+
+    header {
+        flex-direction: column; /* Alinha os itens verticalmente */
+        padding: 10px;
+    }
+
+    #nomeTurma, #formAtualizarPontuacao, #trofeus {
+        text-align: center;
+        width: 100%; /* Garante que os elementos não ultrapassem a largura da tela */
+    }
+
+    #nomeAluno {
+        width: 100%; /* Ajusta o campo de input para preencher a tela */
+    }
+
+    .container {
+        flex-direction: column; /* Alinha os itens verticalmente em vez de horizontalmente */
+    }
+
+    .boneca {
+        width: 150px; /* Reduz o tamanho da boneca */
+    }
+
+    table th, table td {
+        padding: 8px; /* Reduz o espaço nas células da tabela */
+    }
+
+    footer {
+        font-size: 12px; /* Reduz o tamanho da fonte no rodapé */
+    }
+
+    nav ul {
+        flex-direction: column; /* Coloca os itens de navegação em coluna */
+        align-items: center;
+    }
+
+    nav ul li {
+        margin-right: 0;
+        margin-bottom: 10px; /* Adiciona espaço entre os itens de navegação */
+    }
+
+    .turmalina {
+        font-size: 18px; /* Reduz o tamanho da fonte */
+    }
+}
+
+/* Telas médias (tablets) */
+@media (max-width: 900px) {
+    body {
+        padding: 15px;
+    }
+
+    header {
+        flex-direction: column; /* Alinha os itens verticalmente */
+        padding: 15px;
+    }
+
+    .container {
+        flex-direction: row; /* Alinha os itens horizontalmente */
+    }
+
+    .boneca {
+        width: 160px; /* Ajuste o tamanho da boneca */
+    }
+
+    #nomeAluno {
+        width: 80%; /* Ajusta o campo de input para ocupar 80% da largura da tela */
+    }
+
+    table th, table td {
+        padding: 8px; /* Ajuste o padding */
+    }
+
+    footer {
+        font-size: 14px; /* Ajuste o tamanho da fonte no rodapé */
+    }
+
+    nav ul {
+        flex-direction: row; /* Coloca os itens de navegação em linha */
+    }
+
+    .turmalina {
+        font-size: 20px; /* Ajuste do tamanho da fonte */
+    }
+}
+
+/* Telas grandes (desktops) */
+@media (min-width: 1200px) {
+    body {
+        padding: 20px;
+    }
+
+    header {
+        padding: 20px;
+    }
+
+    .container {
+        flex-direction: row; /* Alinha os itens na horizontal */
+    }
+
+    .boneca {
+        width: 180px; /* Tamanho da boneca */
+    }
+
+    #nomeAluno {
+        width: 300px; /* Largura do campo de input */
+    }
+
+    table th, table td {
+        padding: 10px; /* Ajuste do padding */
+    }
+
+    footer {
+        font-size: 16px; /* Ajuste do tamanho da fonte no rodapé */
+    }
+}
