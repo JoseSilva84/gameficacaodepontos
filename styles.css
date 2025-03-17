@@ -279,7 +279,7 @@ main {
 }
 
 /* Telas pequenas (como smartphones) */
-@media (max-width: 400px) {
+@media (max-width: 300px) {
     body {
         padding: 10px;
         background-size: contain; /* Ajuste a imagem de fundo para caber em telas pequenas */
