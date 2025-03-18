@@ -58,6 +58,7 @@ header {
     display: flex;
     align-items: center; /* Alinha verticalmente */
     gap: 1px; /* Espaçamento entre a boneca e o select */
+    gap: 5px; /* Espaçamento entre os elementos */
 }
 
 .boneca {
@@ -66,7 +67,7 @@ header {
 }
 
 #nomeAluno {
-    width: 300px; /* Ajuste a largura conforme necessário */
+    width: 330px; /* Ajuste a largura conforme necessário */
     padding: 8px;
     background-color: #FF7701;
     color: white;
@@ -79,6 +80,40 @@ header {
 #nomeAluno:focus {
     background-color: #f3ab6d; /* Muda para verde claro quando abre */
     color: black; /* Muda o texto para preto */
+}
+
+.adicionarremover {
+    display:inline-block;
+    align-items: center;
+    padding: 8px;
+    gap: 10px;
+    border: none;
+    background-color: #FF7701;
+    color: white;
+}
+
+.adicionarremover::placeholder {
+    color: white; /* Substitua pela cor desejada */
+}
+
+.adicionarremover:focus {
+    background-color: #f3ab6d; /* Muda para verde claro quando abre */
+    color: black; /* Muda o texto para preto */
+}
+
+#meuBotao {
+    padding: 8px 12px;
+}
+
+#removerBotao {
+    padding: 8px 12px;
+}
+
+.adicaoDeAlunos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
 }
 
 #turmalina{
