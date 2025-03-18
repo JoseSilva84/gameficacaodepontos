@@ -125,6 +125,30 @@ async function atualizarPontuacao(pontosAdicionais) {
     }
 
     try {
+        // Obter a senha armazenada no Firestore
+        const loginRef = collection(db, "login");
+        const loginSnapshot = await getDocs(loginRef);
+
+        if (loginSnapshot.empty) {
+            alert("Erro: Nenhuma senha encontrada no sistema.");
+            return;
+        }
+
+        let senhaCorreta;
+        loginSnapshot.forEach((doc) => {
+            senhaCorreta = doc.data().senha;
+        });
+
+        // Solicitar a senha ao usuário
+        const senhaDigitada = prompt("Digite a senha para confirmar a atualização:");
+
+        if (Number(senhaDigitada) !== senhaCorreta) {
+            alert("❌ Senha incorreta! A pontuação não foi atualizada.");
+            return;
+        }
+
+        // Se a senha estiver correta, continua a atualização da pontuação
+        
         const alunosRef = collection(db, "turma7b");
         const q = query(alunosRef, where("nome", "==", nomeInput));
         const querySnapshot = await getDocs(q);

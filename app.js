@@ -94,37 +94,56 @@ async function atualizarPontuacao(pontosAdicionais) {
     if (nomeInput === "" || isNaN(pontosAdicionais)) {
         alert("🚫 Por favor, selecione um nome e clique na pedra para atribuir pontos.");
 
-        // Criar e tocar o som da moeda
         let somErro = new Audio("assets/erro.mp3");
         somErro.play();
 
-        let erro = document.createElement("span"); // Usando <span> para o emoji
-        erro.textContent = "👎"; // Emoji de polegar para baixo
+        let erro = document.createElement("span");
+        erro.textContent = "👎";
         erro.style.position = "fixed";
-        erro.style.bottom = "-50px"; // Começa fora da tela (embaixo)
-        erro.style.left = "50%"; // Centraliza horizontalmente
-        erro.style.transform = "translateX(-50%)"; // Ajusta para centralizar
+        erro.style.bottom = "-50px";
+        erro.style.left = "50%";
+        erro.style.transform = "translateX(-50%)";
         erro.style.fontSize = "100px";
-        erro.style.zIndex = "1000"; // Garante que o emoji fique acima de outros elementos
-        erro.style.transition = "bottom 1s ease-out"; // Animação de subida
+        erro.style.zIndex = "1000";
+        erro.style.transition = "bottom 1s ease-out";
 
-        // Adicionando à tela
         document.body.appendChild(erro);
 
-        // Subindo o emoji até o topo
         setTimeout(() => {
-            erro.style.bottom = "100px"; // Faz o emoji subir até o topo
+            erro.style.bottom = "100px";
         }, 25);
 
-        // Removendo o emoji após 1.5 segundos
         setTimeout(() => {
-            erro.style.bottom = "-50px"; // Faz o emoji descer de volta para fora da tela
-            setTimeout(() => erro.remove(), 1000); // Remove o emoji do DOM após o fade-out
+            erro.style.bottom = "-50px";
+            setTimeout(() => erro.remove(), 1000);
         }, 1500);
         return;
     }
 
     try {
+        // Obter a senha armazenada no Firestore
+        const loginRef = collection(db, "login");
+        const loginSnapshot = await getDocs(loginRef);
+
+        if (loginSnapshot.empty) {
+            alert("Erro: Nenhuma senha encontrada no sistema.");
+            return;
+        }
+
+        let senhaCorreta;
+        loginSnapshot.forEach((doc) => {
+            senhaCorreta = doc.data().senha;
+        });
+
+        // Solicitar a senha ao usuário
+        const senhaDigitada = prompt("Digite a senha para confirmar a atualização:");
+
+        if (Number(senhaDigitada) !== senhaCorreta) {
+            alert("❌ Senha incorreta! A pontuação não foi atualizada.");
+            return;
+        }
+
+        // Se a senha estiver correta, continua a atualização da pontuação
         const alunosRef = collection(db, "alunos");
         const q = query(alunosRef, where("nome", "==", nomeInput));
         const querySnapshot = await getDocs(q);
@@ -137,8 +156,6 @@ async function atualizarPontuacao(pontosAdicionais) {
         querySnapshot.forEach(async (documento) => {
             const alunoRef = doc(db, "alunos", documento.id);
             const dadosAluno = documento.data();
-
-            // Certificando-se de que a pontuação é tratada como números
             const pontosAtuais = Number(dadosAluno.pontos);
             const novaPontuacao = pontosAtuais + pontosAdicionais;
 
@@ -146,33 +163,28 @@ async function atualizarPontuacao(pontosAdicionais) {
 
             alert(`Atualização: ${nomeInput} tem ${novaPontuacao} pontos💎!`);
 
-            // Criar e tocar o som da moeda
             let somMoeda = new Audio("assets/moeda.mp3");
             somMoeda.play();
-            
-            // Criando o elemento de palma (emoji ou imagem)
-            let palma = document.createElement("span"); // Ou use <img> se preferir uma imagem
-            palma.textContent = "👏"; // Emoji de palma
-            palma.style.position = "fixed";
-            palma.style.bottom = "-50px"; // Começa fora da tela (embaixo)
-            palma.style.left = "50%"; // Centralizado horizontalmente
-            palma.style.transform = "translateX(-50%)"; // Ajusta para centralizar
-            palma.style.fontSize = "100px";
-            palma.style.zIndex = "1000"; // Para garantir que fique por cima de outros elementos
-            palma.style.transition = "bottom 1s ease-out"; // A animação de subida
 
-            // Adicionando à tela
+            let palma = document.createElement("span");
+            palma.textContent = "👏";
+            palma.style.position = "fixed";
+            palma.style.bottom = "-50px";
+            palma.style.left = "50%";
+            palma.style.transform = "translateX(-50%)";
+            palma.style.fontSize = "100px";
+            palma.style.zIndex = "1000";
+            palma.style.transition = "bottom 1s ease-out";
+
             document.body.appendChild(palma);
 
-            // A partir de agora, ela sobe para o topo
             setTimeout(() => {
-                palma.style.bottom = "100px"; // Finaliza a animação no topo da tela
+                palma.style.bottom = "100px";
             }, 25);
 
-            // Removendo a palma após 4 segundos
             setTimeout(() => {
-                palma.style.bottom = "-50px"; // Move a palma de volta para baixo
-                setTimeout(() => palma.remove(), 1000); // Remove do DOM após o fade-out
+                palma.style.bottom = "-50px";
+                setTimeout(() => palma.remove(), 1000);
             }, 2000);
 
             carregarAlunos(); // Atualiza a tabela automaticamente
