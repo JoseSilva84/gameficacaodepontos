@@ -1,6 +1,6 @@
 // Importando corretamente os módulos do Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-import { getFirestore, collection, getDocs, updateDoc, doc, query, where } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+import { getFirestore, collection, getDocs, updateDoc, doc, query, where, deleteDoc, addDoc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
 // Configuração correta do Firebase
 const firebaseConfig = {
@@ -86,6 +86,78 @@ function trofeu(pontos) {
 
     return container; // Retorna o elemento do container
 }
+
+async function adicionarAlunos() {
+    const nomesInput = document.getElementById("nomeAlunos1").value.trim();
+    const pontosInput = document.getElementById("pontosAluno").value.trim();
+
+    // Validação dos dados
+    if (nomesInput === "" || pontosInput === "" || isNaN(pontosInput)) {
+        alert("Por favor, insira nomes válidos e uma pontuação numérica.");
+        return;
+    }
+
+    // Separar os nomes dos alunos usando vírgula
+    const nomesAlunos = nomesInput.split(",").map(nome => nome.trim());
+
+    try {
+        // Adicionar cada aluno individualmente
+        for (let nome of nomesAlunos) {
+            if (nome !== "") {
+                await addDoc(collection(db, "alunos"), {
+                    nome: nome,
+                    pontos: Number(pontosInput)
+                });
+            }
+        }
+
+        alert("Alunos adicionados com sucesso!");
+        document.getElementById("nomeAlunos1").value = "";
+        document.getElementById("pontosAluno").value = "";
+
+        carregarAlunos(); // Atualiza a lista de alunos
+    } catch (error) {
+        console.error("Erro ao adicionar alunos:", error);
+    }
+}
+
+document.getElementById("meuBotao").addEventListener("click", adicionarAlunos);
+
+async function removerAluno() {
+    const nomeInput = document.getElementById("nomeAluno").value.trim();
+
+    if (nomeInput === "") {
+        alert("Por favor, selecione um aluno para remover.");
+        return;
+    }
+
+    try {
+        // Confirmação de exclusão
+        if (!confirm(`Tem certeza que deseja remover o aluno "${nomeInput}"?`)) {
+            return;
+        }
+
+        const alunosRef = collection(db, "alunos");
+        const q = query(alunosRef, where("nome", "==", nomeInput));
+        const querySnapshot = await getDocs(q);
+
+        if (querySnapshot.empty) {
+            alert("Aluno não encontrado!");
+            return;
+        }
+
+        querySnapshot.forEach(async (documento) => {
+            await deleteDoc(doc(db, "alunos", documento.id));
+        });
+
+        alert(`Aluno "${nomeInput}" removido com sucesso!`);
+        carregarAlunos(); // Atualiza a lista de alunos na interface
+    } catch (error) {
+        console.error("Erro ao remover o aluno:", error);
+    }
+}
+
+document.getElementById("removerBotao").addEventListener("click", removerAluno);
 
 // Função para atualizar a pontuação de um aluno
 async function atualizarPontuacao(pontosAdicionais) {
