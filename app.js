@@ -87,9 +87,60 @@ function trofeu(pontos) {
     return container; // Retorna o elemento do container
 }
 
+// async function protecaoSenha() {
+//     try {
+//         const loginRef = collection(db, "login");
+//         const loginSnapshot = await getDocs(loginRef);
+    
+//         if (loginSnapshot.empty) {
+//             alert("Erro: Nenhuma senha encontrada no sistema.");
+//             return false;
+//         }
+    
+//         let senhaCorreta;
+//         loginSnapshot.forEach((doc) => {
+//             senhaCorreta = doc.data().senha;
+//         });
+    
+//         // Solicitar a senha ao usuário
+//         const senhaDigitada = prompt("Digite a senha para confirmar a operação:");
+    
+//         if (Number(senhaDigitada) !== senhaCorreta) {
+//             alert("❌ Senha incorreta! A operação foi cancelada.");
+//             return false;
+//         }
+
+//         return true; // Retorna true se a senha estiver correta
+//     } catch (error) {
+//         console.error("Erro ao validar a senha:", error);
+//         return false;
+//     }
+// }
+
 async function adicionarAlunos() {
     const nomesInput = document.getElementById("nomeAlunos1").value.trim();
     const pontosInput = document.getElementById("pontosAluno").value.trim();
+
+    const loginRef = collection(db, "login");
+    const loginSnapshot = await getDocs(loginRef);
+
+    if (loginSnapshot.empty) {
+        alert("Erro: Nenhuma senha encontrada no sistema.");
+        return;
+    }
+
+    let senhaCorreta;
+    loginSnapshot.forEach((doc) => {
+        senhaCorreta = doc.data().senha;
+    });
+
+    // Solicitar a senha ao usuário
+    const senhaDigitada = prompt("Digite a senha para confirmar a atualização:");
+
+    if (Number(senhaDigitada) !== senhaCorreta) {
+        alert("❌ Senha incorreta! A pontuação não foi atualizada.");
+        return;
+    }
 
     // Validação dos dados
     if (nomesInput === "" || pontosInput === "" || isNaN(pontosInput)) {
@@ -125,12 +176,12 @@ document.getElementById("meuBotao").addEventListener("click", adicionarAlunos);
 
 async function removerAluno() {
     const nomeInput = document.getElementById("nomeAluno").value.trim();
-
+    
     if (nomeInput === "") {
         alert("Por favor, selecione um aluno para remover.");
         return;
     }
-
+    
     try {
         // Confirmação de exclusão
         if (!confirm(`Tem certeza que deseja remover o aluno "${nomeInput}"?`)) {
