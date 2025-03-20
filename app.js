@@ -83,6 +83,9 @@ function trofeu(pontos) {
             container.appendChild(imagem);
         }
     });
+    let informacao = document.createElement("h5");
+    informacao.textContent = pontos + "💎";
+    container.appendChild(informacao);
 
     return container; // Retorna o elemento do container
 }
@@ -167,6 +170,7 @@ async function adicionarAlunos() {
         document.getElementById("pontosAluno").value = "";
 
         carregarAlunos(); // Atualiza a lista de alunos
+        carregarAlunos2(); // Atualiza o <select> de alunos
     } catch (error) {
         console.error("Erro ao adicionar alunos:", error);
     }
