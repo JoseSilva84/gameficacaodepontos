@@ -83,6 +83,9 @@ function trofeu(pontos) {
             container.appendChild(imagem);
         }
     });
+    let informacao = document.createElement("h5");
+    informacao.textContent = pontos + "💎";
+    container.appendChild(informacao);
 
     return container; // Retorna o elemento do container
 }
