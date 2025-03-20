@@ -128,7 +128,7 @@ async function adicionarAlunos() {
         // Adicionar cada aluno individualmente
         for (let nome of nomesAlunos) {
             if (nome !== "") {
-                await addDoc(collection(db, "alunos"), {
+                await addDoc(collection(db, "turma8a"), {
                     nome: nome,
                     pontos: Number(pontosInput)
                 });
@@ -161,7 +161,7 @@ async function removerAluno() {
             return;
         }
 
-        const alunosRef = collection(db, "alunos");
+        const alunosRef = collection(db, "turma8a");
         const q = query(alunosRef, where("nome", "==", nomeInput));
         const querySnapshot = await getDocs(q);
 
@@ -171,7 +171,7 @@ async function removerAluno() {
         }
 
         querySnapshot.forEach(async (documento) => {
-            await deleteDoc(doc(db, "alunos", documento.id));
+            await deleteDoc(doc(db, "turma8a", documento.id));
         });
 
         alert(`Aluno "${nomeInput}" removido com sucesso!`);
