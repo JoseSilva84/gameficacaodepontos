@@ -110,7 +110,7 @@ async function adicionarAlunos() {
     // Solicitar a senha ao usuário
     const senhaDigitada = prompt("Digite a senha para confirmar a atualização:");
 
-    if (Number(senhaDigitada) !== senhaCorreta) {
+    if (String(senhaDigitada) !== senhaCorreta) {
         alert("❌ Senha incorreta! A pontuação não foi atualizada.");
         return;
     }
@@ -238,7 +238,7 @@ async function atualizarPontuacao(pontosAdicionais) {
         // Solicitar a senha ao usuário
         const senhaDigitada = prompt("Digite a senha para confirmar a atualização:");
 
-        if (Number(senhaDigitada) !== senhaCorreta) {
+        if (String(senhaDigitada) !== senhaCorreta) {
             alert("❌ Senha incorreta! A pontuação não foi atualizada.");
             return;
         }
