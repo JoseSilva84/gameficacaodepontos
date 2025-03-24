@@ -29,8 +29,18 @@ async function carregarAlunos2() {
         const querySnapshot = await getDocs(collection(db, "turma7c")); // Obtém os documentos
         selectAluno.innerHTML = '<option value="">Selecionar aluno</option>'; // Reseta o select
 
+        // Armazena os alunos em um array
+        const alunos = [];
         querySnapshot.forEach((doc) => {
             const aluno = doc.data().nome; // Supondo que o campo seja "nome"
+            alunos.push(aluno);
+        });
+
+        // Ordena os alunos em ordem alfabética
+        alunos.sort((a, b) => a.localeCompare(b));
+
+        // Adiciona os alunos ordenados ao <select>
+        alunos.forEach((aluno) => {
             const option = document.createElement("option");
             option.value = aluno;
             option.textContent = aluno;
@@ -321,21 +331,29 @@ async function carregarAlunos() {
     estudantesList.innerHTML = ""; // Limpa a tabela
     try {
         const querySnapshot = await getDocs(collection(db, "turma7c"));
+        // Armazena os alunos em um array
+        const alunos = [];
         querySnapshot.forEach((doc) => {
             const dados = doc.data();
+            alunos.push(dados); // Adiciona os dados do aluno ao array
+        });
+
+        // Ordena os alunos em ordem alfabética pelo campo "nome"
+        alunos.sort((a, b) => a.nome.localeCompare(b.nome));
+
+        // Adiciona os alunos ordenados à tabela
+        alunos.forEach((dados) => {
             const linha = document.createElement("tr");
 
             // Criando células da tabela
             const tdNome = document.createElement("td");
             tdNome.textContent = dados.nome;
-            
+
             // Adicionando efeito de hover
             tdNome.style.transition = "font-size 0.2s ease-in-out";
-
             tdNome.addEventListener("mouseover", function () {
                 this.style.fontSize = "1.2em"; // Aumenta o tamanho
             });
-
             tdNome.addEventListener("mouseout", function () {
                 this.style.fontSize = "1em"; // Retorna ao tamanho normal
             });
